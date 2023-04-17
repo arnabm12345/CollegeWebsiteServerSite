@@ -3,8 +3,12 @@ const bodyParser = require('body-parser');
 //const db=require('./database');
 const sequelize = require('./database');
 const addressRoutes = require('./routes/CompanyAddress');
-const Address = require('./models/Adress');
+const LoginRoutes = require('./routes/LoginRoute');
+const UsersRoutes = require('./routes/UsersRoute');
 
+const Address = require('./models/Adress');
+const Users=require('./models/Users');
+const Session=require('./models/Session');
 const app=express();
 
 
@@ -17,10 +21,15 @@ app.use((req, res, next) => {
     next();
 });
 app.use( addressRoutes);
+app.use(LoginRoutes);
+app.use(UsersRoutes);
+
+Users.hasOne(Session);
+Session.belongsTo(Users);
 
 
 sequelize
-  .sync()
+  .sync({force:true})
   .then(result => {
     app.listen(3000);
      console.log(result);
