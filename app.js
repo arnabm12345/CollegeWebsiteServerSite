@@ -5,6 +5,7 @@ const sequelize = require('./database');
 const addressRoutes = require('./routes/CompanyAddress');
 const LoginRoutes = require('./routes/LoginRoute');
 const UsersRoutes = require('./routes/UsersRoute');
+const SessionTableRouts=require('./routes/SessionTableRoutes')
 
 const Address = require('./models/Adress');
 const Users=require('./models/Users');
@@ -23,13 +24,14 @@ app.use((req, res, next) => {
 app.use( addressRoutes);
 app.use(LoginRoutes);
 app.use(UsersRoutes);
+app.use(SessionTableRouts);
 
 Users.hasOne(Session);
 Session.belongsTo(Users);
 
 
 sequelize
-  .sync({force:true})
+  .sync()
   .then(result => {
     app.listen(3000);
      console.log(result);
