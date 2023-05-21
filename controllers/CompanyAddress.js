@@ -8,7 +8,8 @@ exports.getAddress= (req, res, next) => {
         }
     )
     .catch(err=>{
-        console.log(err);
+      console.log(err);
+      return res.status(500).json({ error: 'Failed to retrieve Address' });
     }
     );
     

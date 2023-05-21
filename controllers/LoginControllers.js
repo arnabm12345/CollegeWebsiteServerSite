@@ -4,7 +4,7 @@ exports.getLogin= async (req, res,next) => {
     try {
       const { email, password } = req.body;
       const user = await Users.findOne({ where: {Username:email} });
-      console.log(user);
+      //console.log(user);
       if (!user) {
         return res.status(401).json({ message: 'Invalid email or password' });
       }
